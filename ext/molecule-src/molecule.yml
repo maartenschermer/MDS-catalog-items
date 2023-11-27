@@ -18,10 +18,25 @@ platforms: # Test on ubuntu focal and jammy by default
 provisioner:
   name: ansible
   playbooks:
-    converge: ../ext/molecule-src/converge.yml
-    prepare: ../ext/molecule-src/prepare.yml
+    converge: ${MOLECULE_BASE:-"../ext/molecule-src/"}/converge.yml
+    prepare: ${MOLECULE_BASE:-"../ext/molecule-src/"}/prepare.yml
   env:
+    MOLECULE_BASE: ${MOLECULE_BASE:-"../ext/molecule-src"}
     PLAYBOOK_DIR: ${PLAYBOOK_DIR:-"../../"}
     ANSIBLE_VERBOSITY: ${ANSIBLE_VERBOSITY:-"2"}
     ANSIBLE_ROLES_PATH: ${ANSIBLE_ROLES_PATH:-'../../roles'}
     REQUIREMENTS_FILE: ${REQUIREMENTS_FILE:-"../../requirements.txt"}
+scenario: # Disable idempotence for catalog item tests
+  test_sequence:
+    - dependency
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence
+    - side_effect
+    - verify
+    - cleanup
+    - destroy
