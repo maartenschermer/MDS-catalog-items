@@ -34,4 +34,4 @@ jobs:
       - name: Molecule tests
         run: |
           cd ${{ matrix.catalog_items }}
-          molecule -c ../{{ env.MOLECULE_FILE }} test --all
+          molecule -c ../${{ env.MOLECULE_FILE }} test --all
