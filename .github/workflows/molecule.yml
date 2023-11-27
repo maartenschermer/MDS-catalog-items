@@ -19,6 +19,7 @@ jobs:
       ANSIBLE_FORCE_COLOR: '1'
       REQUIREMENTS_FILE: ext/molecule-src/requirements.txt
       MOLECULE_FILE: ext/molecule-src/molecule.yml
+      MOLECULE_BASE: ../../../ext/molecule-src
     strategy:
       fail-fast: false
       matrix:
