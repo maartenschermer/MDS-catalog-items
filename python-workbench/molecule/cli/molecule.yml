@@ -1,0 +1,11 @@
+---
+provisioner:
+  name: ansible
+  env:
+    components:
+      - name: python-workbench
+        git: https://github.com/UtrechtUniversity/researchcloud-items.git
+        path: playbooks/python-workbench.yml
+      - name: icommands
+        git: https://github.com/UtrechtUniversity/researchcloud-items.git
+        path: playbooks/icommands.yml
