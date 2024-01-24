@@ -1,0 +1,35 @@
+---
+name: Biweekly molecule run
+on:
+  schedule:
+    - cron: '22 2 * * 3' # 2:22am on Monday
+  workflow_dispatch:
+
+jobs:
+
+  molecule:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_USER: ${{ github.actor }}
+      DOCKER_PW: ${{ secrets.GITHUB_TOKEN }}
+      DOCKER_REGISTRY: ghcr.io
+      ANSIBLE_FORCE_COLOR: '1'
+      REQUIREMENTS_FILE: ext/molecule-src/requirements.txt
+      MOLECULE_FILE: ext/molecule-src/molecule.yml
+      MOLECULE_BASE: ../../../ext/molecule-src
+    strategy:
+      fail-fast: false
+      matrix:
+        catalog_items:
+          - python-workbench
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install -r ${{ env.REQUIREMENTS_FILE }}
+      - name: Molecule tests
+        run: |
+          cd ${{ matrix.catalog_items }}
+          molecule -c ../${{ env.MOLECULE_FILE }} test --all
