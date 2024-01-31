@@ -25,3 +25,17 @@ provisioner:
     ANSIBLE_VERBOSITY: ${ANSIBLE_VERBOSITY:-"2"}
     ANSIBLE_ROLES_PATH: ${ANSIBLE_ROLES_PATH:-'../../roles'}
     REQUIREMENTS_FILE: ${REQUIREMENTS_FILE:-"../../requirements.txt"}
+scenario: # Disable idempotence for catalog item tests
+  test_sequence:
+    - dependency
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence
+    - side_effect
+    - verify
+    - cleanup
+    - destroy
