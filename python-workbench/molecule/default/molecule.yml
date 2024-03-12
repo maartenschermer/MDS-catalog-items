@@ -17,12 +17,24 @@ provisioner:
   name: ansible
   env:
     components:
+      - name: security
+        git: https://github.com/UtrechtUniversity/researchcloud-items.git
+        path: playbooks/security_updates.yml
+        parameters:
+          security_updates_firstrun: true
+          security_updates_periodic: false
+      # - name: guacamole
+      #   git: https://github.com/dometto/plugin-guacamole.git
+      #   refspec: master
+      #   path: plugin-guacamole.yml
+      #   parameters:
+      #     guacamole_guacd_host: 0.0.0.0
       - name: python-workbench
         git: https://github.com/UtrechtUniversity/researchcloud-items.git
         path: playbooks/python-workbench.yml
-      - name: guacamole
-        git: https://github.com/dometto/plugin-guacamole.git
-        refspec: master
-        path: plugin-guacamole.yml
-        parameters:
-          guacamole_guacd_host: 0.0.0.0
+      - name: miniconda
+        git: https://github.com/UtrechtUniversity/researchcloud-items.git
+        path: playbooks/miniconda.yml
+      - name: icommands
+        git: https://github.com/UtrechtUniversity/researchcloud-items.git
+        path: playbooks/icommands.yml
