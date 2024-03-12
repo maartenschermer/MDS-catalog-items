@@ -12,7 +12,9 @@
       ansible.builtin.command: >
         ansible-playbook -c local -v -b {{ remote_plugin.arguments }} --extra-vars='{{ remote_plugin.parameters }}' /rsc/plugins/{{ item.name}}/{{ item.path }}
       register: ansible_on_workspace
-      changed_when: "'changed=0' not in ansible_on_workspace.stdout_lines[-1]"
+      # This command should have changed=true when the ansible call on the workspace does not output 'changed=0'
+      # Also assume changed=true when stdout_lines is not present in the output -- this happens in some cases when exceptions occur.
+      changed_when: "ansible_on_workspace.stdout_lines is not defined or 'changed=0' not in ansible_on_workspace.stdout_lines[-1]"
       vars:
         remote_plugin:
           script_type: Ansible PlayBook
