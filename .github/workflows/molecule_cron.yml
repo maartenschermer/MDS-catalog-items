@@ -17,6 +17,7 @@ jobs:
       REQUIREMENTS_FILE: ext/molecule-src/requirements.txt
       MOLECULE_FILE: ext/molecule-src/molecule.yml
       MOLECULE_BASE: ../../../ext/molecule-src
+      CRUN_VER: 1.11.2
     strategy:
       fail-fast: false
       matrix:
